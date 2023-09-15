@@ -17,4 +17,12 @@ io.on('connection', socket => {
         socket.join(room);
         io.to(socket.id).emit('room:join', data);
     })
+
+    socket.on('user:call', ({ to, offer }) => {
+        io.to(to).emit('incomming:call', { from: socket.id, offer })
+    })
+
+    socket.on('call:accepted', ({ to, ans }) => {
+        io.to(to).emit('call:accepted', { from: socket.id, ans })
+    })
 })
