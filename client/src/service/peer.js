@@ -1,14 +1,16 @@
-class peerService {
+class PeerService {
     constructor() {
         if (!this.peer) {
             this.peer = new RTCPeerConnection({
-                iceServers: [{
-                    urls: [
-                        'stun:stun.l,google.com:19302',
-                        'stun:global.stun.twilio.com:3478'
-                    ],
-                }]
-            })
+                iceServers: [
+                    {
+                        urls: [
+                            "stun:stun.l.google.com:19302",
+                            "stun:global.stun.twilio.com:3478",
+                        ],
+                    },
+                ],
+            });
         }
     }
 
@@ -22,8 +24,8 @@ class peerService {
     }
 
     async setLocalDescription(ans) {
-        if (this.peer && ans) {
-            await this.peer.setLocalDescription(new RTCSessionDescription(ans));
+        if (this.peer) {
+            await this.peer.setRemoteDescription(new RTCSessionDescription(ans));
         }
     }
 
@@ -36,5 +38,4 @@ class peerService {
     }
 }
 
-const peerInstance = new peerService();
-export default peerInstance;
+export default new PeerService();
